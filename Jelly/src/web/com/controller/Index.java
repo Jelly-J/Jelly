@@ -35,7 +35,6 @@ public class Index {
 		HttpSession session = request.getSession();
 		AccountInfo attribute = (AccountInfo) session.getAttribute("user");
 		System.out.println(name);
-		System.out.println(name);
 		// new Barcode().zxingBarCode(response);
 		// modelMap.addAttribute("accountName", attribute.getAccountName());
 		modelMap.addAttribute("accountName", attribute.getAccountName());
