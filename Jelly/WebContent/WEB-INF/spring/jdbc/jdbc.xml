@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans:beans xmlns:beans="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+                        http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-context.xsd">
+
+
+	<!-- <beans:bean id="dataSource" class="org.apache.tomcat.dbcp.dbcp.BasicDataSource" destroy-method="close"> -->
+	<!-- <beans:property name="driverClassName" value="${jdbc.driverClassName}" /> -->
+	<!-- <beans:property name="url" value="${jdbc.url}" /> -->
+	<!-- <beans:property name="username" value="${jdbc.username}" /> -->
+	<!-- <beans:property name="password" value="${jdbc.password}" /> -->
+	<!-- </beans:bean> -->
+
+	<!-- Hikari Datasource -->
+	<beans:bean id="dataSource" class="com.zaxxer.hikari.HikariDataSource" destroy-method="close">
+		<beans:property name="dataSourceClassName" value="com.mysql.jdbc.jdbc2.optional.MysqlDataSource" />
+		<!-- 无需指定，除非系统无法自动识别 -->
+		<!-- <beans:property name="driverClassName" value="${jdbc.driverClassName}" /> -->
+		<!-- 连接只读数据库时配置为true， 保证安全 -->
+		<!-- <beans:property name="readOnly" value="false" /> -->
+		<!-- 等待连接池分配连接的最大时长（毫秒），超过这个时长还没可用的连接则发生SQLException， 缺省:30秒 -->
+		<beans:property name="connectionTimeout" value="30000" />
+		<!-- 一个连接idle状态的最大时长（毫秒），超时则被释放（retired），缺省:10分钟 -->
+		<beans:property name="idleTimeout" value="600000" />
+		<!-- 一个连接的生命时长（毫秒），超时而且没被使用则被释放（retired），缺省:30分钟，建议设置比数据库超时时长少30秒，参考MySQL wait_timeout参数（show variables like '%timeout%';） -->
+		<beans:property name="maxLifetime" value="1800000" />
+		<!-- 连接池中允许的最大连接数。缺省值：10；推荐的公式：((core_count * 2) + effective_spindle_count) -->
+		<!-- <beans:property name="maximumPoolSize" value="15" /> -->
+
+		<beans:property name="dataSourceProperties">
+			<beans:props>
+				<beans:prop key="url">${jdbc.url}</beans:prop>
+				<beans:prop key="user">${jdbc.username}</beans:prop>
+				<beans:prop key="password">${jdbc.password}</beans:prop>
+				<beans:prop key="prepStmtCacheSize">250</beans:prop>
+				<beans:prop key="prepStmtCacheSqlLimit">2048</beans:prop>
+				<beans:prop key="cachePrepStmts">true</beans:prop>
+			</beans:props>
+		</beans:property>
+
+	</beans:bean>
+
+
+	<!-- define the SqlSessionFactory -->
+	<beans:bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<beans:property name="dataSource" ref="dataSource" />
+		<beans:property name="mapperLocations" value="classpath*:db/**/*.xml" />
+	</beans:bean>
+
+	<beans:bean id="SqlSession" class="org.mybatis.spring.SqlSessionTemplate">
+		<beans:constructor-arg index="0" ref="sqlSessionFactory" />
+		<!-- <beans:property name="sqlSessionFactoryBeanName" ref="sqlSessionFactory" /> -->
+	</beans:bean>
+
+</beans:beans>

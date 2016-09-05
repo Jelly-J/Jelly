@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID"
+	version="3.0">
+	<display-name>Jelly</display-name>
+	<welcome-file-list>
+		<welcome-file>/WEB-INF/views/main.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- 配置log4j配置文件的路径，可以是xml或 properties（此参数必须配）-->
+	<!-- 下面使用了classpath 参数指定log4j.properties文件的位置，这样log4j的配置文件就不用非要放到src的下面 -->
+	<context-param>
+		<param-name>log4jConfigLocation</param-name>
+		<param-value>/WEB-INF/config/log4j.properties</param-value>
+	</context-param>
+	<!-- 使用spring的监听器,当应用启动时来读取log4j的配置文件 -->
+	<listener>
+		<listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+	</listener>
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>/WEB-INF/spring/applocationContext.xml</param-value>
+	</context-param>
+	<servlet>
+		<servlet-name>dispatcher</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>/WEB-INF/spring/servlet-context.xml</param-value>
+		</init-param>
+		<load-on-startup>2</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>dispatcher</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<error-page>
+		<exception-type>404</exception-type>
+		<location>/WEB-INF/views/error.jsp</location>
+	</error-page>
+	
+<!-- 	<servlet> -->
+<!-- 	   <servlet-name>serviceCode</servlet-name> -->
+<!-- 	   <servlet-class>zxing.Barcode</servlet-class> -->
+<!-- 	</servlet> -->
+<!-- 	<servlet-mapping> -->
+<!--         <servlet-name>serviceCode</servlet-name> -->
+<!--         <url-pattern>code.png</url-pattern> -->
+<!--     </servlet-mapping> -->
+	
+	<!-- <servlet> -->
+	<!-- <display-name>Apache-Axis Servlet</display-name> -->
+	<!-- <servlet-name>AxisServlet</servlet-name> -->
+	<!-- <servlet-class>org.apache.axis.transport.http.AxisServlet</servlet-class> -->
+	<!-- </servlet> -->
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>AxisServlet</servlet-name> -->
+	<!-- <url-pattern>/servlet/AxisServlet</url-pattern> -->
+	<!-- </servlet-mapping> -->
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>AxisServlet</servlet-name> -->
+	<!-- <url-pattern>*.jws</url-pattern> -->
+	<!-- </servlet-mapping> -->
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>AxisServlet</servlet-name> -->
+	<!-- <url-pattern>/services/*</url-pattern> -->
+	<!-- </servlet-mapping> -->
+	<!-- <servlet> -->
+	<!-- <display-name>Axis Admin Servlet</display-name> -->
+	<!-- <servlet-name>AdminServlet</servlet-name> -->
+	<!-- <servlet-class>org.apache.axis.transport.http.AdminServlet</servlet-class> -->
+	<!-- <load-on-startup>100</load-on-startup> -->
+	<!-- </servlet> -->
+	<!-- <servlet-mapping> -->
+	<!-- <servlet-name>AdminServlet</servlet-name> -->
+	<!-- <url-pattern>/servlet/AdminServlet</url-pattern> -->
+	<!-- </servlet-mapping> -->
+</web-app>
