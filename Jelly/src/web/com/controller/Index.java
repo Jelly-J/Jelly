@@ -44,7 +44,7 @@ public class Index {
 	}
 
 	@RequestMapping(value = "/upload", method = RequestMethod.POST)
-	public String uplpad(@RequestParam("file") MultipartFile file, HttpServletRequest request, ModelMap model) {
+	public @ResponseBody String uplpad(@RequestParam("file") MultipartFile file, HttpServletRequest request, ModelMap model) {
 		logger.info("upload begin");
 		System.out.println("开始");
 		String path = request.getSession().getServletContext().getRealPath("resource\\upload");
@@ -60,9 +60,13 @@ public class Index {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		model.addAttribute("fileUrl", "/upload/" + fileName);
+		model.addAttribute("fileUrl", "resource/upload/" + fileName);
 		logger.info("upload end");
-		return "result";
+		return null;
 	}
-
+	@RequestMapping(value = "/result.do", method = RequestMethod.POST)
+	public String login(HttpServletRequest request) {
+		
+		 return "main";
+	}
 }

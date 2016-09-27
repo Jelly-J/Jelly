@@ -103,13 +103,13 @@
 			$('#qrcode').qrcode({
 				width : 300,
 				height : 300,
-				text : utf16to8("艹你妈那个逼！！！")
+				text : utf16to8("aaaaaaaaaaa！！！")
 			});
 		</script>
 
   <form action="index/upload" method="post" enctype="multipart/form-data">
     <input type="file" name="file" /> <input type="submit" value="Submit" />
   </form>
-
+<img alt="" src='<%=request.getRequestURL()%>${fileUrl}'>
 </body>
 </html>
