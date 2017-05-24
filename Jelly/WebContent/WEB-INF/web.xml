@@ -3,9 +3,9 @@
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID"
 	version="3.0">
 	<display-name>Jelly</display-name>
-<!-- 	<welcome-file-list> -->
-<!-- 		<welcome-file>/WEB-INF/views/main.jsp</welcome-file> -->
-<!-- 	</welcome-file-list> -->
+	<welcome-file-list>
+		<welcome-file>/WEB-INF/views/main.jsp</welcome-file>
+	</welcome-file-list>
 	<!-- 配置log4j配置文件的路径，可以是xml或 properties（此参数必须配）-->
 	<!-- 下面使用了classpath 参数指定log4j.properties文件的位置，这样log4j的配置文件就不用非要放到src的下面 -->
 	<context-param>
